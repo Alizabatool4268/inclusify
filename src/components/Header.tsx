@@ -23,11 +23,12 @@ function Header() {
           <div className='text-[30px] font-bold ssm:text-[24px] xsm:text-[20px]'>
             Inclusify
           </div>
-          <div className=' w-[320px] text-[18px] flex justify-between items-center ssm:w-[230px] xsm:text-sm xsm:w-[210px]'>
+          <div className=' w-[340px] text-[18px] flex justify-between items-center ssm:w-[230px] xsm:text-sm xsm:w-[210px]'>
             <Link href={"/"}>Home</Link>
-            <Link href={"/AboutUs"}>About us</Link>
-            <Link href={"/SignUp"}>Sign up </Link>
-            <Link href={"/latestposts"}> Cart</Link>
+            <Link href={"/Aboutus"}>About us</Link>
+            <Link href={"/Signup"}>Sign up </Link>
+            <Link href={"/AllProducts"}>Products</Link>
+            <Link href={"/Cart"}> Cart</Link>
           </div>
         </nav>
         {/*for mobile screens*/}

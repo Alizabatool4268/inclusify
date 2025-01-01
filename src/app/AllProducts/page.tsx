@@ -2,6 +2,7 @@ import React from 'react';
 import {client} from "@/sanity/lib/client";
 import { urlFor } from '@/sanity/lib/image';
 import Image from 'next/image';
+import Link from 'next/link';
 
 async function Page() {
   interface productDetails {
@@ -26,14 +27,21 @@ async function Page() {
    productraiting
 }
 `)
-console.log(data)
+console.log("product data",data)
+if(!data){
+  return(
+    <p className='text-black'>check your internet</p>
+  )
+}
   return (
     <main>
       <section className='grid grid-cols-3'>
         {data.map((productsdata)=>(
           <div className='' key={productsdata._id}>
             <Image height={100} width={100} src={urlFor(productsdata.productimage).url()} alt={productsdata.productname}></Image>
-          </div>
+            <h1>{productsdata.productname}</h1>
+            <Link href={`/AllProducts/${productsdata._id}`}>view more</Link>
+         </div>
         ))}
       </section>
     </main>
