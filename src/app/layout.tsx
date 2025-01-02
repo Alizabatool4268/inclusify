@@ -29,7 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.className} w-screen overflow-x-hidden bg-white text-black antialiased`}
       >
-        <Header />
+        <Header cart={[]}/>
         {children}
       </body>
     </html>

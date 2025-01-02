@@ -4,13 +4,24 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { IoMenu } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
+import { useLocalStorage } from '@/lib/useLocalStorage';
 
+interface productDetails {
+  _id:string,
+   productname:string,
+   productdescription:string,
+   productimage:string,
+   productownerimage:string,
+   ownername:string,
+   productPrice:number,
+   productraiting:number,
+}
 
-function Header() {
-  
+function Header(props:{cart:[]}) {
+  console.log(props)
   const [Opensidebar,setOpensidebar] = useState(false);
   const [Closesidebar,setClosesidebar] = useState(true);
-
+  const [cart] =useState<productDetails[]>([]);
   const togglesidebar = ()=>{
     setOpensidebar(!Opensidebar)
     setClosesidebar(!Closesidebar)
@@ -28,7 +39,7 @@ function Header() {
             <Link href={"/Aboutus"}>About us</Link>
             <Link href={"/Signup"}>Sign up </Link>
             <Link href={"/AllProducts"}>Products</Link>
-            <Link href={"/Cart"}> Cart</Link>
+            <Link href={"/Cart"}> Cart{cart.length}</Link>
           </div>
         </nav>
         {/*for mobile screens*/}

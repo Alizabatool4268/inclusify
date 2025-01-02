@@ -6,6 +6,8 @@ import Loader from '@/components/Loader';
 import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 import { useState,useEffect } from 'react';
+import { useLocalStorage } from '@/lib/useLocalStorage';
+import Header from '@/components/Header';
 
 
 interface PageProps{
@@ -29,15 +31,20 @@ function ProductPage({ params }: PageProps) {
   const [loading, setLoading] = useState(false)
   const [product, setProduct] = useState<productDetails | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [addTocart,setaddtocart] = useState([])
+  const [cart, setCart] = useState<productDetails[]>([]);
+
+   function sendDataToCart(product: productDetails) {
+    setCart([product]);
+    console.log("cart",cart)
+  }
 
   useEffect(() => {
+    
     const fetchProduct = async () => {
       try {
         setLoading(true)
         const resolvedParams = await params
         const productId = resolvedParams.products
-
         if (!productId) {
           setError('Invalid product ID')
           return
@@ -47,14 +54,13 @@ function ProductPage({ params }: PageProps) {
           groq`*[_type == "product" && _id == $productId][0]`,
           { productId }
         )
-
         if (!fetchedProduct) {
           setError('Product not found')
           return
         }
-
         setProduct(fetchedProduct)
         setError(null)
+        
       } catch (error) {
         console.error('Error:', error)
         setError('Error loading product')
@@ -62,8 +68,9 @@ function ProductPage({ params }: PageProps) {
         setLoading(false)
       }
     }
-
+    
     fetchProduct()
+
   }, [params])
 
   if (loading) {
@@ -80,6 +87,7 @@ function ProductPage({ params }: PageProps) {
 
   return (
     <div className="p-4">
+
       <Image 
         height={100} 
         width={100} 
@@ -89,7 +97,7 @@ function ProductPage({ params }: PageProps) {
       <h1 className="text-xl font-bold mt-4">{product.productname}</h1>
       <p className="mt-2">{product.productdescription}</p>
       <p className="mt-2">Price: ${product.productPrice}</p>
-      <button className="bg-black h-[35px] text-white w-[100px] rounded-lg mt-4">
+      <button className="bg-black h-[35px] text-white w-[100px] rounded-lg mt-4"   onClick={() => sendDataToCart(product)} >
         Add To Cart
       </button>
     </div>
@@ -97,3 +105,4 @@ function ProductPage({ params }: PageProps) {
 }
 
 export default ProductPage;
+
