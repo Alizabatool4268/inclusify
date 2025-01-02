@@ -8,6 +8,7 @@ import { urlFor } from '@/sanity/lib/image';
 import { useState,useEffect } from 'react';
 import { useLocalStorage } from '@/lib/useLocalStorage';
 import Header from '@/components/Header';
+import { useCart } from '@/components/cartContext';
 
 
 interface PageProps{
@@ -32,10 +33,16 @@ function ProductPage({ params }: PageProps) {
   const [product, setProduct] = useState<productDetails | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [cart, setCart] = useState<productDetails[]>([]);
-
-   function sendDataToCart(product: productDetails) {
+  const { cartItems, addToCart } = useCart();
+  
+  function sendDataToCart(product: productDetails) {
     setCart([product]);
     console.log("cart",cart)
+  }
+  function handleAddToCart(product: productDetails) {
+    console.log("Adding to cart:", product);
+    addToCart(product);
+    console.log("Cart after adding:", cartItems); // Check updated cart
   }
 
   useEffect(() => {
@@ -97,12 +104,13 @@ function ProductPage({ params }: PageProps) {
       <h1 className="text-xl font-bold mt-4">{product.productname}</h1>
       <p className="mt-2">{product.productdescription}</p>
       <p className="mt-2">Price: ${product.productPrice}</p>
-      <button className="bg-black h-[35px] text-white w-[100px] rounded-lg mt-4"   onClick={() => sendDataToCart(product)} >
-        Add To Cart
+      <button className="bg-black h-[35px] text-white w-[100px] rounded-lg mt-4"   onClick={() => handleAddToCart(product)} >
+        Add To Cart ({cartItems.length})
       </button>
+
     </div>
+    //line 104 se cart remove kara hai
   )
 }
-
 export default ProductPage;
 
