@@ -1,8 +1,12 @@
+"use client"
 import React from 'react';
 import {client} from "@/sanity/lib/client"
 import { groq } from 'next-sanity';
+import Loader from '@/components/Loader';
 import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
+import { useState,useEffect } from 'react';
+
 
 interface PageProps{
     params:Promise<{
@@ -20,35 +24,76 @@ interface productDetails {
    productraiting:number,
 }
 
-async function Page({ params }: PageProps) {
-  const resolvedParams = (await params).products
-  const productId = resolvedParams;
 
-  if (!productId) {
-    return <div className='text-blue-500'>Invalid product ID</div>;
-  }
-  try {
-    const product:productDetails = await client.fetch(
-      groq`*[_type == "product" && _id == $productId][0]`,
-      { productId }
-    );
-    if (!product) {
-      return <div className="text-red-500">Product not found</div>;
+function ProductPage({ params }: PageProps) {
+  const [loading, setLoading] = useState(false)
+  const [product, setProduct] = useState<productDetails | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [addTocart,setaddtocart] = useState([])
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true)
+        const resolvedParams = await params
+        const productId = resolvedParams.products
+
+        if (!productId) {
+          setError('Invalid product ID')
+          return
+        }
+
+        const fetchedProduct = await client.fetch<productDetails>(
+          groq`*[_type == "product" && _id == $productId][0]`,
+          { productId }
+        )
+
+        if (!fetchedProduct) {
+          setError('Product not found')
+          return
+        }
+
+        setProduct(fetchedProduct)
+        setError(null)
+      } catch (error) {
+        console.error('Error:', error)
+        setError('Error loading product')
+      } finally {
+        setLoading(false)
+      }
     }
 
-    return (
-      <div>
-        <Image height={100} width={100} src={urlFor(product.productimage).url()} alt={product.productname}></Image>
-        <h1>{product.productname}</h1>
-        <p>{product.productdescription}</p>
-        <p>Price: ${product.productPrice}</p>
-        <button className='bg-black text-white w-[100px] rounded-lg'>Add To cart</button>
-      </div>
-    );
-  } catch (error) {
-    console.error('Error:', error);
-    return <div className="text-red-500">Error loading product</div>;
+    fetchProduct()
+  }, [params])
+
+  if (loading) {
+    return <Loader />
   }
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>
+  }
+
+  if (!product) {
+    return null
+  }
+
+  return (
+    <div className="p-4">
+      <Image 
+        height={100} 
+        width={100} 
+        src={urlFor(product.productimage).url()} 
+        alt={product.productname}
+      />
+      <h1 className="text-xl font-bold mt-4">{product.productname}</h1>
+      <p className="mt-2">{product.productdescription}</p>
+      <p className="mt-2">Price: ${product.productPrice}</p>
+      <button className="bg-black h-[35px] text-white w-[100px] rounded-lg mt-4">
+        Add To Cart
+      </button>
+    </div>
+  )
 }
 
-export default Page;
+export default ProductPage;
