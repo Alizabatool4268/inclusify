@@ -36,19 +36,20 @@ if(!data){
   )
 }
   return (
-    <main>
+    <main className='overflow-x-hidden'>
       <section className={`bg-neutral-200 h-[200px] flex flex-col justify-center items-center ${josefinSans.className}`}>
         <h1 className='font-bold text-[35px]'>Latest products</h1>
         <p>Inclusify, Get the best experience in shopping</p>
       </section>
-      <section className='grid grid-cols-3 gap-3 grid-rows-4 mt-11'>
+      <section className='grid grid-cols-3 gap-3 grid-rows-4 mt-11 md:grid-cols-2 md:grid-rows-6 sm:grid-cols-2 sm:grid-rows-6 
+      msm:grid-cols-1 msm:grid-rows-12 ssm:grid-cols-1 ssm:grid-rows-12 xsm:grid-cols-1 xsm:grid-rows-12 '>
         {data.map((productsdata)=>(
           <div className='flex justify-center items-center flex-col' key={productsdata._id} >
-            <div className='flex justify-around items-center w-[280px] h-[45px] border-[1px] border-solid border-neutral-400 rounded-sm '>
+            <div className='flex justify-around items-center w-[270px] h-[45px] border-[1px] border-solid border-neutral-400 rounded-sm '>
               <Image width={40} height={40} src={urlFor(productsdata.productownerimage).url()} alt={productsdata.ownername} className='rounded-[50%]'></Image>
               <h5 className='text-zinc-800 font-bold'>{productsdata.ownername}</h5>
             </div>
-           <div className='w-[280px] flex justify-center flex-col items-center gap-2 shadow-lg bg-neutral-300' key={productsdata._id}>
+           <div className='w-[270px] flex justify-center flex-col items-center gap-2 shadow-lg bg-neutral-300' key={productsdata._id}>
              <Image height={200} width={200} src={urlFor(productsdata.productimage).url()} alt={productsdata.productname}></Image>
              <span className='bg-white flex justify-center flex-col items-center gap-2'>
               <h1 className='font-bold text-center text-pink-500'>{productsdata.productname}</h1>
