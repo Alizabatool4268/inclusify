@@ -86,17 +86,18 @@ function ProductPage({ params }: PageProps) {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 flex justify-center items-center flex-col">
 
       <Image 
-        height={100} 
-        width={100} 
+        height={200} 
+        width={200} 
         src={urlFor(product.productimage).url()} 
         alt={product.productname}
       />
       <h1 className="text-xl font-bold mt-4">{product.productname}</h1>
-      <p className="mt-2">{product.productdescription}</p>
-      <p className="mt-2">Price: ${product.productPrice}</p>
+      <p className='font-bold'> price {product.productPrice}$</p>
+      <p className="mt-2 w-[280px]">{product.productdescription}</p>
+      <p>{product.productraiting}</p>
       <button className="bg-black h-[35px] text-white w-[100px] rounded-lg mt-4"   onClick={() => handleAddToCart(product)} >
         Add To Cart
       </button>
