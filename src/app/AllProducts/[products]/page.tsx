@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 import { useState,useEffect } from 'react';
 import { useCart } from '@/components/cartContext';
+import { IoStar } from "react-icons/io5";
 
 
 interface PageProps{
@@ -87,20 +88,25 @@ function ProductPage({ params }: PageProps) {
 
   return (
     <div className="p-4 flex justify-center items-center flex-col">
-
+     <div className='bg-neutral-100 justify-center items-center flex-col'>
+      <span className='flex justify-center items-center flex-col'>
       <Image 
         height={200} 
         width={200} 
         src={urlFor(product.productimage).url()} 
         alt={product.productname}
-      />
-      <h1 className="text-xl font-bold mt-4">{product.productname}</h1>
-      <p className='font-bold'> price {product.productPrice}$</p>
-      <p className="mt-2 w-[280px]">{product.productdescription}</p>
-      <p>{product.productraiting}</p>
-      <button className="bg-black h-[35px] text-white w-[100px] rounded-lg mt-4"   onClick={() => handleAddToCart(product)} >
+        />
+      </span>
+      <span className='bg-neutral-200 flex flex-col justify-center items-center'>
+       <h1 className="text-xl font-bold mt-4">{product.productname}</h1>
+       <p className='font-bold'> price {product.productPrice}$</p>
+       <p className="mt-2 w-[280px] text-center">{product.productdescription}</p>
+       <p className='flex justify-center items-center'><IoStar className='text-yellow-500' />{product.productraiting}</p>
+       <button className="bg-black h-[35px] text-white w-[100px] rounded-lg mt-4"   onClick={() => handleAddToCart(product)} >
         Add To Cart
       </button>
+      </span>
+     </div>
 
     </div>
     

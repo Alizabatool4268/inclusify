@@ -9,8 +9,8 @@ function Footer() {
     <footer className='bg-neutral-700 text-white mt-11'>
       <div className='flex justify-around items-center bg-neutral-800 ssm:flex-col xsm:flex-col'>
         <h1 className={`text-[35px] font-bold ${josefinSans.className}`}>Inclusify</h1>
-        <span className='flex msm:flex-col msm:gap-2 ssm:flex-col ssm:gap-2 xsm:flex-col xsm:gap-2'>
-         <input type="email" name='email' placeholder='Enter your email' className='text-black px-4 border-none h-[35px] w-[230px]'/>
+        <span className='flex msm:h-[100px] msm:flex-col msm:gap-2 ssm:flex-col ssm:gap-2 xsm:flex-col xsm:gap-2'>
+         <input type="email" name='email' placeholder='Enter your email' className='text-black px-4 border-none h-[35px] w-[230px] msm:mt-1'/>
          <button className='w-[230px] bg-black h-[35px] text-white'>Subscribe</button>
         </span>
       </div>

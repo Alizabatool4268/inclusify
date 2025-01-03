@@ -54,7 +54,7 @@ function Header() {
           </div>
           <div className=' w-[280px] flex justify-between items-center mt-3 flex-col gap-5 ssm:w-[230px] xsm:text-sm xsm:w-[210px]'>
             <Link href={"/"}>Home</Link>
-            <Link href={"/AboutUs"}>About us</Link>
+            <Link href={"/Aboutus"}>About us</Link>
             <Link href={"/AllProducts"}>Products</Link>
             <span className='flex'>
             <Link href={"/Cart"} className='mt-1'><FaShoppingCart/></Link>
