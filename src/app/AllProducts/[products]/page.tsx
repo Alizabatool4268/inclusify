@@ -6,8 +6,6 @@ import Loader from '@/components/Loader';
 import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 import { useState,useEffect } from 'react';
-import { useLocalStorage } from '@/lib/useLocalStorage';
-import Header from '@/components/Header';
 import { useCart } from '@/components/cartContext';
 
 
@@ -32,13 +30,8 @@ function ProductPage({ params }: PageProps) {
   const [loading, setLoading] = useState(false)
   const [product, setProduct] = useState<ProductDetails | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [cart, setCart] = useState<ProductDetails[]>([]);
   const { cartItems, addToCart } = useCart();
   
-  function sendDataToCart(product: ProductDetails) {
-    setCart([product]);
-    console.log("cart",cart)
-  }
   function handleAddToCart(product: ProductDetails) {
     console.log("Adding to cart:", product);
     addToCart(product);

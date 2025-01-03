@@ -4,24 +4,14 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { IoMenu } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
-import { useLocalStorage } from '@/lib/useLocalStorage';
 import { useCart } from '@/components/cartContext';
+import { FaShoppingCart } from "react-icons/fa";
 
-interface productDetails {
-  _id:string,
-   productname:string,
-   productdescription:string,
-   productimage:string,
-   productownerimage:string,
-   ownername:string,
-   productPrice:number,
-   productraiting:number,
-}
-
+// yahan se mai ne type remove ki hai product details walli
 function Header() {
   const [Opensidebar,setOpensidebar] = useState(false);
   const [Closesidebar,setClosesidebar] = useState(true);
-   const { cartItems, addToCart } = useCart();
+   const { cartItems } = useCart();
   const togglesidebar = ()=>{
     setOpensidebar(!Opensidebar)
     setClosesidebar(!Closesidebar)
@@ -34,12 +24,14 @@ function Header() {
           <div className='text-[30px] font-bold ssm:text-[24px] xsm:text-[20px]'>
             Inclusify
           </div>
-          <div className=' w-[340px] text-[18px] flex justify-between items-center ssm:w-[230px] xsm:text-sm xsm:w-[210px]'>
+          <div className=' w-[310px] text-[18px] flex justify-between items-center ssm:w-[230px] xsm:text-sm xsm:w-[210px]'>
             <Link href={"/"}>Home</Link>
             <Link href={"/Aboutus"}>About us</Link>
-            <Link href={"/Signup"}>Sign up </Link>
             <Link href={"/AllProducts"}>Products</Link>
-            <Link href={"/Cart"}> Cart({cartItems.length})</Link>
+            <span className='flex'>
+            <Link href={"/Cart"} className='mt-1'><FaShoppingCart/></Link>
+            <span className='h-4 w-4 rounded-[50%] flex justify-center text-white items-center text-sm bg-red-500'>{cartItems.length}</span>
+            </span>
           </div>
         </nav>
         {/*for mobile screens*/}
@@ -63,8 +55,11 @@ function Header() {
           <div className=' w-[280px] flex justify-between items-center mt-3 flex-col gap-5 ssm:w-[230px] xsm:text-sm xsm:w-[210px]'>
             <Link href={"/"}>Home</Link>
             <Link href={"/AboutUs"}>About us</Link>
-            <Link href={"/SignUp"}>Sign up </Link>
-            <Link href={"/latestposts"}>Cart</Link>
+            <Link href={"/AllProducts"}>Products</Link>
+            <span className='flex'>
+            <Link href={"/Cart"} className='mt-1'><FaShoppingCart/></Link>
+            <span className='h-4 w-4 rounded-[50%] text-white flex justify-center items-center text-sm bg-red-500'>{cartItems.length}</span>
+            </span>
           </div>
         </nav>
         {Opensidebar && (
