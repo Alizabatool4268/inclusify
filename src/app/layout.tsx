@@ -30,8 +30,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.className} w-screen overflow-x-hidden bg-white text-black antialiased`}
       >
-        <Header cart={[]}/>
         <CartProvider>
+        <Header/>
         {children}
         </CartProvider>
       </body>

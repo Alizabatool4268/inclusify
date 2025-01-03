@@ -11,7 +11,7 @@ export default function Home() {
       <section className='w-screen overflow-x-hidden mt-20'>
                <div className='grid grid-cols-3 grid-rows-2 gap-2 xsm:grid-cols-1 xsm:grid-rows-6 ssm:grid-cols-2 ssm:grid-rows-3'>
                 <div className="h-[280px]" style={{background:"url('/Images/womens-coat-two.jpg')",backgroundRepeat:"no-repeat" , backgroundSize:"cover"}}></div>
-                <div className='bg-[#3c5377] w-full flex justify-center items-center'>
+                <div className='bg-neutral-500 w-full flex justify-center items-center'>
                   <h1 className='text-[50px] text-center text-white font-bold'>Inclusify</h1>
                 </div>
                 <div style={{background:"url('/Images/womens-coat-two.jpg')",backgroundRepeat:"no-repeat" , backgroundSize:"cover"}}></div>

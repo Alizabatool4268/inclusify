@@ -1,75 +1,75 @@
 "use client"
-"use client"
 import { useCart } from '@/components/cartContext';
+import Image from 'next/image';
+import Link from 'next/link';
+import { urlFor } from '@/sanity/lib/image';
 
 function Cart() {
-  const { cartItems, removeFromCart, clearCart } = useCart();
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.productPrice, 0);
+  const { 
+    cartItems, 
+    removeFromCart, 
+    clearCart, 
+    incrementProductQuantity,
+    decrementProductQuantity,
+    getTotalPrice
+  } = useCart();
 
   return (
-    <div className="p-4">
-      <h2>Shopping Cart ({cartItems.length} items)</h2>
+    <main className="p-4">
+      <h2 className="text-2xl font-bold mb-4">Shopping Cart ({cartItems.length} items)</h2>
       
       {cartItems.length === 0 ? (
-        <p>Your cart is empty</p>
+        <p className="text-gray-500">Your cart is empty</p>
       ) : (
-        <>
-          {cartItems.map((item, index) => (
-            <div key={`${item._id}-${index}`} className="border-b py-2">
-              <h3>{item.productname}</h3>
-              <p>${item.productPrice}</p>
-              <button 
-                onClick={() => removeFromCart(item._id)}
-                className="text-red-500"
-              >
+      <>
+        {cartItems.map((item) => (
+         <div key={item._id} className="mb-4">      
+            <div className="flex justify-around items-center">
+              <span>
+                <Image height={70} width={70} src={urlFor(item.productimage).url()} alt={item.ownername}></Image>
+               <h3 className="font-semibold">{item.productname}</h3>
+               <p className="text-gray-600">${(item.productPrice * item.quantity).toFixed(2)}</p>
+             </span>
+                  
+             <div className="flex items-center gap-4">
+               <div className="flex items-center gap-2">
+                <button 
+                onClick={() => decrementProductQuantity(item._id)}>
+                  -
+                </button>
+                <span className="mx-2">{item.quantity}</span>
+                <button 
+                onClick={() => incrementProductQuantity(item._id)}>
+                 +
+                </button>
+                </div>             
+                <button 
+                onClick={() => removeFromCart(item._id)}>
                 Remove
-              </button>
-            </div>
+               </button>
+               </div>
+             </div>
+         </div>
           ))}
           
-          <div className="mt-4">
-            <p>Total: ${totalPrice}</p>
+          <div className="mt-6 flex flex-col gap-4">
+            <div className="flex justify-center items-center">
+              <span className="text-xl font-semibold">Total:</span>
+              <span className="text-xl">${getTotalPrice().toFixed(2)}</span>
+            </div>
+            
             <button 
               onClick={clearCart}
-              className="bg-red-500 text-white px-4 py-2 rounded"
+              className="w-full"
             >
               Clear Cart
             </button>
+             <Link href={"/"}>Check out</Link>
           </div>
         </>
       )}
-    </div>
+    </main>
   );
 }
 
 export default Cart;
-// "use client"
-// import React from 'react';
-// import { useState,useEffect } from 'react';
-
-// interface productDetails {
-//   _id:string,
-//    productname:string,
-//    productdescription:string,
-//    productimage:string,
-//    productownerimage:string,
-//    ownername:string,
-//    productPrice:number,
-//    productraiting:number,
-// }
-// function Page(props:{products:productDetails}){
-//   console.log(" cart props",props.products)
-//     const [cartdata,setcartdata] = useState<productDetails[]>([]);
-//     console.log("cart variable",cartdata)
-//     const data:productDetails = props.products;
-   
-//   return (
-//     <div className="p-4">
-//      <h1>{data?.productname}</h1>
-//      <p>{data?.productdescription}</p>
-
-//     </div>
-//   )
-// }
-
-// export default Page;

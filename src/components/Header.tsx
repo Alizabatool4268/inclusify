@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { IoMenu } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { useLocalStorage } from '@/lib/useLocalStorage';
+import { useCart } from '@/components/cartContext';
 
 interface productDetails {
   _id:string,
@@ -17,11 +18,10 @@ interface productDetails {
    productraiting:number,
 }
 
-function Header(props:{cart:[]}) {
-  console.log(props)
+function Header() {
   const [Opensidebar,setOpensidebar] = useState(false);
   const [Closesidebar,setClosesidebar] = useState(true);
-  const [cart] =useState<productDetails[]>([]);
+   const { cartItems, addToCart } = useCart();
   const togglesidebar = ()=>{
     setOpensidebar(!Opensidebar)
     setClosesidebar(!Closesidebar)
@@ -30,7 +30,7 @@ function Header(props:{cart:[]}) {
   return (
     <header className='overflow-x-hidden'>
       {/* dekstop side bar */}
-        <nav className='flex justify-around items-center bg-[#213555] text-white h-[70px] xsm:hidden ssm:hidden'>
+        <nav className='flex justify-around items-center bg-neutral-700 text-white h-[70px] xsm:hidden ssm:hidden'>
           <div className='text-[30px] font-bold ssm:text-[24px] xsm:text-[20px]'>
             Inclusify
           </div>
@@ -39,11 +39,11 @@ function Header(props:{cart:[]}) {
             <Link href={"/Aboutus"}>About us</Link>
             <Link href={"/Signup"}>Sign up </Link>
             <Link href={"/AllProducts"}>Products</Link>
-            <Link href={"/Cart"}> Cart{cart.length}</Link>
+            <Link href={"/Cart"}> Cart({cartItems.length})</Link>
           </div>
         </nav>
         {/*for mobile screens*/}
-        <nav className='flex justify-around items-center bg-[#213555] text-white h-[70px] msm:hidden sm:hidden md:hidden lg:hidden'>
+        <nav className='flex justify-around items-center bg-neutral-700 text-white h-[70px] msm:hidden sm:hidden md:hidden lg:hidden'>
          <div className='text-[30px] ssm:text-[24px] xsm:text-[20px] font-bold'>
             Inclusify
           </div>

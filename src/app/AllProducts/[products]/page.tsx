@@ -16,7 +16,7 @@ interface PageProps{
         products:string
     }>
 }
-interface productDetails {
+interface ProductDetails {
   _id:string,
    productname:string,
    productdescription:string,
@@ -30,16 +30,16 @@ interface productDetails {
 
 function ProductPage({ params }: PageProps) {
   const [loading, setLoading] = useState(false)
-  const [product, setProduct] = useState<productDetails | null>(null)
+  const [product, setProduct] = useState<ProductDetails | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [cart, setCart] = useState<productDetails[]>([]);
+  const [cart, setCart] = useState<ProductDetails[]>([]);
   const { cartItems, addToCart } = useCart();
   
-  function sendDataToCart(product: productDetails) {
+  function sendDataToCart(product: ProductDetails) {
     setCart([product]);
     console.log("cart",cart)
   }
-  function handleAddToCart(product: productDetails) {
+  function handleAddToCart(product: ProductDetails) {
     console.log("Adding to cart:", product);
     addToCart(product);
     console.log("Cart after adding:", cartItems); // Check updated cart
@@ -57,7 +57,7 @@ function ProductPage({ params }: PageProps) {
           return
         }
 
-        const fetchedProduct = await client.fetch<productDetails>(
+        const fetchedProduct = await client.fetch<ProductDetails>(
           groq`*[_type == "product" && _id == $productId][0]`,
           { productId }
         )
@@ -105,11 +105,11 @@ function ProductPage({ params }: PageProps) {
       <p className="mt-2">{product.productdescription}</p>
       <p className="mt-2">Price: ${product.productPrice}</p>
       <button className="bg-black h-[35px] text-white w-[100px] rounded-lg mt-4"   onClick={() => handleAddToCart(product)} >
-        Add To Cart ({cartItems.length})
+        Add To Cart
       </button>
 
     </div>
-    //line 104 se cart remove kara hai
+    
   )
 }
 export default ProductPage;
